@@ -25,7 +25,7 @@ public class StickersAndDucks {
     }
 
     @Test
-    public void menuCheck() {
+    public void stickersCheck() {
         driver.get("http://localhost/litecard");
 
         // Список товаров на главной странице
