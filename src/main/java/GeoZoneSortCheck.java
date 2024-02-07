@@ -46,8 +46,7 @@ public class GeoZoneSortCheck {
         List<String> moreZonesCountries = findCountriesMoreThanZeroZones(rows);
         for (String country : moreZonesCountries) {
             driver.findElement(By.linkText(country)).click();
-            List<WebElement> zones = driver.findElements(By.cssSelector("table.dataTable tr td:nth-child(3) input[type=hidden]"));
-
+            List<WebElement> zones = driver.findElements(By.cssSelector("table.dataTable tr td:nth-child(3)"));
             isSorted = isInAlphabeticalOrderCheck(zones, "none", "value");
             System.out.println(country + " zones in alphabetical order: " + isSorted);
             driver.findElement(By.linkText("Countries")).click();
@@ -93,9 +92,10 @@ public class GeoZoneSortCheck {
                 case "none" -> element.getAttribute(attribute);
                 default -> throw new IllegalStateException("Unexpected value: " + searchMethod);
             };
-            unsortedList.add(str);
-            sortedList.add(str);
-            //System.out.println(str);
+            if (str!=null && !str.isEmpty()) {
+                unsortedList.add(str);
+                sortedList.add(str);
+            }
         }
         Collections.sort(sortedList);
         boolean isSorted = true;
