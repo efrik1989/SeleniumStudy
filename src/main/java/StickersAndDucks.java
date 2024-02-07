@@ -29,11 +29,11 @@ public class StickersAndDucks {
         driver.get("http://localhost/litecard");
 
         // Список товаров на главной странице
-        List<WebElement> elements = driver.findElements(By.cssSelector("a.link > div.image-wrapper"));
+        List<WebElement> elements = driver.findElements(By.cssSelector("div.content li.product.column.shadow"));
 
         for (WebElement element : elements) {
-            System.out.print("Product: " + element.findElement(By.xpath("./img[@class='image']")).getAttribute("alt") + "    | ");
-            List <WebElement> stickers = element.findElements(By.xpath("./div[contains(@class,'sticker')]"));
+            System.out.print("Product: " + element.findElement(By.cssSelector("img")).getAttribute("alt") + "    | ");
+            List <WebElement> stickers = element.findElements(By.cssSelector("div.sticker"));
             System.out.println("Stickers: " + stickers.size());
         }
         driver.quit();
