@@ -47,7 +47,7 @@ public class GeoZoneSortCheck {
         for (String country : moreZonesCountries) {
             driver.findElement(By.linkText(country)).click();
             List<WebElement> zones = driver.findElements(By.cssSelector("table.dataTable tr td:nth-child(3)"));
-            isSorted = isInAlphabeticalOrderCheck(zones, "none", "value");
+            isSorted = isInAlphabeticalOrderCheck(zones, "none", "textContent");
             System.out.println(country + " zones in alphabetical order: " + isSorted);
             driver.findElement(By.linkText("Countries")).click();
         }
