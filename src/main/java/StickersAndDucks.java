@@ -25,7 +25,7 @@ public class StickersAndDucks {
     }
 
     @Test
-    public void stickersCheck() {
+    public void stickersCheck() throws Exception {
         driver.get("http://localhost/litecard");
 
         // Список товаров на главной странице
@@ -35,6 +35,9 @@ public class StickersAndDucks {
             System.out.print("Product: " + element.findElement(By.cssSelector("img")).getAttribute("alt") + "    | ");
             List <WebElement> stickers = element.findElements(By.cssSelector("div.sticker"));
             System.out.println("Stickers: " + stickers.size());
+            if (stickers.size() != 1) {
+                throw new Exception(" Количество стикеров не равно 1");
+            }
         }
         driver.quit();
 
