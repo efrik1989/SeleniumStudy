@@ -29,7 +29,7 @@ public class StickersAndDucks {
         driver.get("http://localhost/litecard");
 
         // Список товаров на главной странице
-        List<WebElement> elements = driver.findElements(By.cssSelector("div.content li.product.column.shadow"));
+        List<WebElement> elements = driver.findElements(By.cssSelector("div.content li.product"));
 
         for (WebElement element : elements) {
             System.out.print("Product: " + element.findElement(By.cssSelector("img")).getAttribute("alt") + "    | ");
