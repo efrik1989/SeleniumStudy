@@ -10,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.GeckoDriverInfo;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -48,11 +47,13 @@ public class ProductPageCheck {
             String regularPrice = element.findElement(By.cssSelector("s.regular-price")).getAttribute("textContent");
             String regularPriceTag = element.findElement(By.cssSelector("s.regular-price")).getTagName();
             String regularPriceColor = element.findElement(By.cssSelector("s.regular-price")).getCssValue("color");
-            Dimension regularPriceTextSize = element.findElement(By.cssSelector("s.regular-price")).getSize();
+            double regularPriceTextSize = Double.parseDouble(element.findElement(By.cssSelector("s.regular-price")).getCssValue("font-size")
+                    .replaceAll("px", ""));
             String campaignPrice = element.findElement(By.cssSelector("strong.campaign-price")).getAttribute("textContent");
             String campaignPriceTag = element.findElement(By.cssSelector("strong.campaign-price")).getTagName();
             String campaignPriceColor = element.findElement(By.cssSelector("strong.campaign-price")).getCssValue("color");
-            Dimension campaignPriceTextSize = element.findElement(By.cssSelector("strong.campaign-price")).getSize();
+            double campaignPriceTextSize = Double.parseDouble(element.findElement(By.cssSelector("strong.campaign-price")).getCssValue("font-size")
+                    .replaceAll("px", ""));
 
             element.click();
 
@@ -64,8 +65,10 @@ public class ProductPageCheck {
             String productCampaignPrice = driver.findElement(By.cssSelector("strong.campaign-price")).getAttribute("textContent");
             String productCampaignPriceTag = driver.findElement(By.cssSelector("strong.campaign-price")).getTagName();
             String productCampaignPriceColor = driver.findElement(By.cssSelector("strong.campaign-price")).getCssValue("color");
-            Dimension productRegularPriceSize = driver.findElement(By.cssSelector("s")).getSize();
-            Dimension productCampaignPriceSize = driver.findElement(By.cssSelector("strong.campaign-price")).getSize();
+            double productRegularPriceSize = Double.parseDouble(driver.findElement(By.cssSelector("s.regular-price"))
+                    .getCssValue("font-size").replaceAll("px", ""));
+            double productCampaignPriceSize = Double.parseDouble(driver.findElement(By.cssSelector("strong.campaign-price"))
+                    .getCssValue("font-size").replaceAll("px", ""));
 
             System.out.println("а) Совпадает название товара: " + (title.equals(productTitle)));
             System.out.println("б) Совпадают цены: обычная - " + (regularPrice.equals(productRegularPrice))
@@ -78,6 +81,7 @@ public class ProductPageCheck {
                     + "\nСтраница товара: цвет - " + checkColor(productCampaignPriceColor) + ", тэг элемента : " + productCampaignPriceTag);
             System.out.println("д) Акционная цена крупнее. \nГлавная страница: " + isCampaignBigger(regularPriceTextSize, campaignPriceTextSize)
                     + "\nСтраница продукта: " + isCampaignBigger(productRegularPriceSize, productCampaignPriceSize));
+
             driver.quit();
         }
     }
@@ -105,9 +109,8 @@ public class ProductPageCheck {
         return null;
     }
 
-    public boolean isCampaignBigger(Dimension regularSize, Dimension campaignSize) {
-        return regularSize.getWidth() < campaignSize.getWidth() &&
-                regularSize.getHeight() < campaignSize.getHeight();
+    public boolean isCampaignBigger(double regularSize, double campaignSize) {
+        return regularSize < campaignSize;
     }
 
 
