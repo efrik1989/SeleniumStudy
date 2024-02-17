@@ -75,7 +75,7 @@ public class CartWorkCheckScenario {
     @After
     public void afterTest() {
         try {
-            driver.close();
+            driver.quit();
         }catch (Exception e) {
             System.out.println("Browser is already closed.");
         }
