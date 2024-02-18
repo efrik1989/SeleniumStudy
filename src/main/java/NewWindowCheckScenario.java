@@ -31,7 +31,7 @@ public class NewWindowCheckScenario {
     }
 
     @Test
-    public void countriesInAlphabeticalOrder() {
+    public void newWindowOpenCheck() {
         driver.get("http://localhost/litecard/admin");
 
         //login
