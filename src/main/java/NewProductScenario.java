@@ -7,8 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,13 +19,13 @@ public class NewProductScenario {
     String file;
     WebDriver driver;
     final static long DEFAULT_TIMEOUT = 5000;
-    String productName = "Balloon";
+    String productName = "Balloon" + new Date().getTime();
 
     @Before
     public void beforeTest() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
+        //ChromeOptions options = new ChromeOptions();
+        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         file = "src/main/resources/balloon.png";
 
@@ -45,7 +47,7 @@ public class NewProductScenario {
         System.out.println("Переход в Catalog и добавление нового продукта");
 
         driver.findElement(By.cssSelector("#tab-general > table > tbody > tr:nth-child(1) label:nth-child(3) > input[type=radio]")).click();
-        driver.findElement(By.cssSelector("#tab-general > table > tbody > tr:nth-child(2) input[type=text]")).sendKeys("Balloon");
+        driver.findElement(By.cssSelector("#tab-general > table > tbody > tr:nth-child(2) input[type=text]")).sendKeys(productName);
         driver.findElement(By.cssSelector("#tab-general > table > tbody > tr:nth-child(7) " +
                 "tr:nth-child(4) > td:nth-child(1) > input[type=checkbox]")).click();
 
