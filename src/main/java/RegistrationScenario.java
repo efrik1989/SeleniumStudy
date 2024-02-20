@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -17,6 +19,7 @@ import javax.xml.datatype.DatatypeConstants;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class RegistrationScenario {
@@ -27,8 +30,8 @@ public class RegistrationScenario {
     @Before
     public void beforeTest(){
         WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
+        //ChromeOptions options = new ChromeOptions();
+        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
     }
@@ -45,10 +48,14 @@ public class RegistrationScenario {
         driver.findElement(By.cssSelector("#create-account > div > form input[name=address1]")).sendKeys("2nd avenue");
         driver.findElement(By.cssSelector("#create-account > div > form input[name=postcode]")).sendKeys("55555");
         driver.findElement(By.cssSelector("#create-account > div > form input[name=city]")).sendKeys("Providance");
-        Select select = new Select(driver.findElement(By.cssSelector("#create-account > div > form > table > tbody > tr:nth-child(5) > td:nth-child(1) select")));
-        select.selectByVisibleText("United States");
+        WebElement el = driver.findElement(By.cssSelector("span[dir=ltr]"));
+        Actions actions = new Actions(driver);
+                actions.moveToElement(el).click().build().perform();
 
-        driver.findElement(By.cssSelector("#create-account > div > form input[name=email]")).sendKeys("something@some.com");
+        driver.findElement(By.cssSelector("span.select2-search.select2-search--dropdown > input")).sendKeys("United States" + Keys.ENTER);
+
+        String email = "something" + new Date().getTime() + "@some.com";
+        driver.findElement(By.cssSelector("#create-account > div > form input[name=email]")).sendKeys(email);
         driver.findElement(By.cssSelector("#create-account > div > form input[name=phone]")).sendKeys("7775555555");
         driver.findElement(By.cssSelector("#create-account > div > form input[name=password]")).sendKeys("aaaaaa");
         driver.findElement(By.cssSelector("#create-account > div > form input[name=confirmed_password]")).sendKeys("aaaaaa");
